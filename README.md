@@ -4,13 +4,7 @@
 
 ## javascript 算法
 
-### 基础算法
-
-[基础算法]()
-
-### 中级算法
-
-[中级算法]()
+[基础算法和中级算法](https://github.com/ZW-L/freecodecamp/tree/master/src/javascript%20%E7%AE%97%E6%B3%95)
 
 
 ## 项目
