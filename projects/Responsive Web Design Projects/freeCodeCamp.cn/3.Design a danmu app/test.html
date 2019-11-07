@@ -1,0 +1,124 @@
+<!-- test the innerText and innerHTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		span {
+			visibility: hidden;
+		}
+	</style>
+</head>
+<body>
+	<p name="test">This is a <span>paragraph</span>.</p>
+	<script type="text/javascript">
+		const p1 = document.getElementsByTagName('p')[0];
+		// console.log(p1.attributes[0].nodeValue);
+		console.log(p1.textContent);
+		console.log(p1.innerText);
+		console.log(p1.innerHTML);
+		console.log(p1.outerText);
+		console.log(p1.outerHTML);
+		// p1.textContent = 'new paragraph';
+	</script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>use-vue</title>
+    <script type="text/javascript" src="../vue.dev.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script> -->
+    <style type="text/css">
+    input {}
+    </style>
+</head>
+
+<body>
+    <div id="example1">
+        <input type="checkbox" id="jack" value="jack">
+        <label for="jack">Jack</label>
+        <input type="checkbox" id="alice" value="alice">
+        <label for="alice">Alice</label>
+        <input type="checkbox" id="anna" value="anan">
+        <label for="anna">Anna</label>
+        <input type="checkbox" id="mike" value="mike">
+        <label for="mike">Mike</label>
+        <br>
+        <span id="show">choose nobody.</span>
+        <br>
+        <img src="https://gif-1257414916.cos.ap-guangzhou.myqcloud.com/test.gif?q-sign-algorithm=sha1&q-ak=AKIDETtBeHZGO6IyGI1EnuWmHMjeuiVfuRYn&q-sign-time=1535451927;1535453727&q-key-time=1535451927;1535453727&q-header-list=&q-url-param-list=&q-signature=104aa0fe2f4959e1bbed04a0241c43fcb797834f&x-cos-security-token=bac11c434ddd245a9d61d5d49dd3c09e4e7c6e4410001&response-content-disposition=attachment">
+    </div>
+    <script type="text/javascript">
+    /*const example1 = document.getElementById('example1');
+    const inputs = document.getElementsByTagName('input');
+    const show = document.getElementById('show');
+    let checknames = [];
+
+    for (let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('click', function(e) {
+            let value = inputs[i].value; 
+            if (inputs[i].checked) {
+                checknames.push(value);
+            } else {
+                const index = checknames.indexOf(value);
+                checknames.splice(index, 1);
+            }
+        }, false);
+    }
+
+    example1.addEventListener('click', function() {
+    	if(checknames.length === 0) {
+    		show.textContent = 'choose nobody.';
+    	} else {
+    		show.textContent = 'choose list: ' + checknames;
+    	}
+    	console.log(checknames);
+    }, false);*/
+    const example1 = document.getElementById('example1');
+    const show = document.getElementById('show');
+    let checknames = [];
+    // 处理 IE6~8 的时间对象获取
+    function getTarget(e) {
+    	if(!e) {
+    		e = window.event;
+    	}
+    	return e.target || e.srcElement;
+    }
+    // 根据事件对象进行事件预处理（修改checkames数组）
+    function itemDone(e) {
+    	let target = getTarget(e);
+    	let value = target.value;
+    	// 点击label标签时退出函数,但是会将时间自动传至其绑定的input标签
+    	if(!target.id) {
+    		// console.log('label quit');
+    		return ;
+    	}
+    	// console.log('event by', target);
+    	if(target.checked) {
+    		checknames.push(value);
+    	} else {
+    		let index = checknames.indexOf(value);
+    		checknames.splice(index, 1);
+    	}
+    }
+    /*  事件委托
+    	1.对父对象绑定事件，在itemDone函数中对子对象以及checknames数组进行操作
+     */
+    example1.addEventListener('click', function(e) {
+    	itemDone(e);
+    	if(checknames.length === 0) {
+    		show.textContent = 'choose nobody';
+    	} else {
+    		show.textContent = 'choose list: ' + checknames;
+    	}
+    	// 点击label标签时会触发两次事件，是因为label将事件传递至与之匹配的input
+    	console.log(checknames, e.target);
+    }, false);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Danmu App</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <style type="text/css">
+    .container {
+        margin-top: 120px;
+    }
+
+    #bullet-screen {
+        height: 380px;
+        overflow: hidden;
+        border: 3px solid rgb(255, 170, 0);
+        border-radius: 5px;
+    }
+
+    #send {
+        border-color: red;
+        color: red;
+    }
+
+    input,
+    button {
+        margin-top: 15px;
+    }
+
+    #bullet-screen>p {
+        height: 30px;
+        font-size: 25px;
+        position: absolute;
+        left: 100%;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="bullet-screen" class="col-md-12">
+            </div>
+        </div>
+        <div class="row">
+            <div id="controler">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <input id="input-msg" class="form-control input-md" type="text" name="" placeholder="说点什么？" maxlength="25">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <div class="col-md-6 ">
+                            <button id="send" type="button" class="btn btn-default btn-block">发射</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button id="clear" type="button" class="btn btn-default btn-block">清屏</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function() {
+
+        var $parent = document.getElementById('bullet-screen');
+        // getColor() 利用随机数生成弹幕颜色
+        var getColor = function() {
+            var r_color = Math.floor(Math.random() * 256);
+            var g_color = Math.floor(Math.random() * 256);
+            var b_color = Math.floor(Math.random() * 256);
+            return 'rgb(' + r_color + ',' + g_color + ',' + b_color + ')';
+        };
+        // 发送弹幕
+        var $sendBullet = function() {
+            // 获取 input 输入的弹幕内容
+            var text = $('#input-msg').val();
+            if (text.length) {
+                // 清空 input 的内容
+                $('#input-msg').val('');
+                // 添加弹幕节点
+                var el = document.createElement('p');
+                var elMsg = document.createTextNode(text);
+                el.appendChild(elMsg);
+                $parent.appendChild(el);
+
+                // 随机数确定弹道、获取弹幕颜色
+                var top = Math.floor(Math.random() * 12) * 30;
+                el.style.top = top + 'px';
+                el.style.color = getColor();
+                // 通过定时器修改弹幕节点的left属性，让弹幕运动
+                var move = 100;
+                var timer = setInterval(function() {
+                    el.style.left = move + '%';
+                    move -= 0.2;
+                    // 粗略计算弹幕完全离开的位置，删除弹幕节点
+                    if (el.offsetLeft < -500) {
+                        clearInterval(timer);
+                        $parent.removeChild(el);
+                    }
+                }, 30);
+            }
+        };
+        // 清空弹幕
+        var $clearBullet = function() {
+            $('#bullet-screen > p').remove();
+        };
+        // 事件绑定
+        $('#send').on('click', $sendBullet);
+        $('#clear').on('click', $clearBullet);
+
+    });
+    </script>
+</body>
+
+</html>

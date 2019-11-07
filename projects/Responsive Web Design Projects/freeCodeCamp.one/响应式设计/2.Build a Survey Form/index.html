@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+    <div id="container">
+        <h1 id="title">Survey Form</h1>
+        <main>
+            <p id="description">Let us know how we can improve freeCodeCamp</p>
+            <form id="survey-form">
+
+                <div class="row">
+                    <div class="row-left">
+                        <label for="name-label"><sup>*</sup> Name: </label>
+                    </div>
+                    <div class="row-right">
+                        <input id="name-label" type="text" name="username" placeholder="Enter your name">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row-left">
+                        <label for="email-label"><sup>*</sup> Email:
+                        </label>
+                    </div>
+                    <div class="row-right">
+                        <input id="email-label" type="email" name="email" placeholder="Enter your email">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row-left">
+                        <label for="number-label"><sup>*</sup> Age:
+                        </label>
+                    </div>
+                    <div class="row-right">
+                        <input id="number-label" type="number" name="age" min="12" max="120" placeholder="Age">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row-left">Which option best describes your current role?</div>
+                    <div class="row-right">
+                        <select id="dropdown">
+                            <optgroup>
+                                <option disabled>Selected an option</option>
+                                <option value="Student">Student</option>
+                                <option value="Full Time Job">Full Time Job</option>
+                                <option value="Full Time Learner">Full Time Learner</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                                <option value="Other">Other</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="row-left"><sup>*</sup> How likely is that you would recommend freeCodeCamp to a friend?</div>
+                    <div class="row-right">
+                        <div>
+                            <input id="share-definitely" type="radio" name="share">
+                            <label for="share-definitely">
+                                Definitely
+                            </label>
+                        </div>
+                        <div>
+                            <input id="share-maybe" type="radio" name="share">
+                            <label for="share-maybe">
+                                Maybe
+                            </label>
+                        </div>
+                        <div>
+                            <input id="share-no-sure" type="radio" name="share">
+                            <label for="share-no-sure">
+                                Not sure
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="row-left">
+                    	Things that should be improved in the future (Check all that apply):
+                    </div>
+                    <div class="row-right id=" checkbox-group ">
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Front-end Project "> Front-end Project
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Back-end Project "> Back-end Project
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Data Visualzation "> Data Visualzation
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Challenges "> Challenges
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Open Source Community "> Open Source Community
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Gitter help rooms "> Gitter help rooms
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Videos "> Videos
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="City Meetups "> City Meetups
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Wiki "> Wiki
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Forum "> Forum
+                            </label>
+                        </div>
+                        <div>
+                            <label>
+                                <input type="checkbox" name="learn" value="Additional Courses "> Additional Courses
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="row-left ">Any Comments or Suggestions?</div>
+                    <div class="row-right ">
+                        <textarea id="comments" placeholder="Enter your comment here... "></textarea>
+                    </div>
+                </div>
+                <div class="row submit-row ">
+                    <button type="submit " id="submit">Submit</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+
+</html>

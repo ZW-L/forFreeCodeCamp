@@ -1,0 +1,127 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+html {
+	background-color: rgb(168, 214, 208);
+}
+#container {
+	padding-top: 30px;
+}
+#title {
+	font-size: 2.5rem;
+	text-align: center;
+}
+
+/* main'style */
+main {
+	position: relative;
+	width: 60%;
+	background-color: #fff;
+	margin: 0 auto;
+	margin-top: 1.5rem;
+	border-radius: .8rem;
+}
+#description {
+	font-size: 1.2rem;
+	text-align: center;
+	padding-top: 2rem;
+}
+#survey-form {
+	position: relative;
+	width: 80%;
+	margin: 0 auto;
+	/*background-color: #ccc;*/
+	font-size: 1.3rem;
+}
+
+#name-label, #email-label, #number-label {
+	width: 70%;
+	height: 2.5rem;
+	border-radius: .2rem;
+	border: 1px solid #ccc;
+	font-size: 1.2rem;
+}
+input[type="radio"], input[type="checkbox"] {
+	width: 1rem;
+	height: 1rem;
+}
+/* 
+	if width less than 500px 
+	keep one column
+*/
+@media (min-width:500px) {
+	div.row {
+		position: relative;
+		margin: 1rem 0;
+		display: flex;
+		justify-content: space-around;
+	}
+	div.row-left {
+		width: 100%;
+		text-align: right;
+		padding-right: 2rem;
+	}
+	div.row-right {
+		width: 100%;
+	}
+	div.row-right div {
+		margin-bottom: .8rem;	
+	}
+}
+/* 
+	if width greater than 500px
+	separate to two columns 
+*/
+@media screen(max-width: 500px) {
+	div.row {
+		position: relative;
+		margin: 2rem 0;
+		display: flex;
+		justify-content: space-around;
+	}
+	div.row-left {
+		width: 45%;
+		text-align: left;
+	}
+	div.row-right {
+		width: 50%;
+	}
+	div.row-right div {
+		margin-bottom: .8rem;
+	}
+}
+
+
+
+
+/* <select>'s style */
+#dropdown {
+	width: 40%;
+	height: 2.5rem;
+	font-size: 1.1rem;
+	padding: 0 2px 1px;
+}
+#dropdown option {
+
+}
+
+#comments {
+	width: 70%;
+	height: 5rem;
+	font-size: 1.2rem;
+}
+
+.submit-row {
+	text-align: center;
+	height: 6rem;
+}
+#submit {
+	width: 10%;
+	height: 3rem;
+	background-color: rgb(89, 172, 224);
+	color: #fff;
+	font-size: 1.3rem;
+	border: none;
+	border-radius: .3rem; 
+}

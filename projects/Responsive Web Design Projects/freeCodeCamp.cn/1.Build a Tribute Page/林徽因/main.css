@@ -1,0 +1,115 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    font-size: 14px;
+}
+
+.container {
+    background-color: rgb(237, 237, 237);
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 4%;
+    margin-bottom: 50px;
+    border-radius: 30px;
+    padding-top: 2em;
+}
+
+.container>header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.main-description {
+    font-size: 2em;
+}
+
+
+/* <main> style */
+
+main {
+    position: relative;
+    margin-top: 2em;
+}
+
+.img-about {
+    width: 80%;
+    background-color: #fff;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.img-figure {
+    width: 80%;
+    margin: 0 auto;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    margin-top: 2em;
+}
+figcaption {
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+/* <main>-content's style */
+
+.content {
+    width: 60%;
+    margin: 0 auto;
+}
+
+.content>p:first-child {
+	height: 50px;
+	line-height: 50px;
+    font-size: 1.6em;
+    font-size: bold;
+    margin-top: 10px;
+}
+
+.content > ul {
+	margin-left: 1em;
+	font-size: 1.2em;
+}
+.content > ul > li {
+	margin-top: 0.7em;
+}
+
+/* <main>-comment's style */
+.comment {
+	margin-top: 2em;
+}
+.comment>blockquote {
+	width: 60%;
+	margin: 0 auto;
+	font-size: 1.4em;
+	line-height: 2em;
+	color: rgb(50, 50, 50);
+}
+.comment footer {
+	margin-top: 1rem;
+}
+
+/* footer's style */
+.container > footer {
+	text-align: center;
+	height: 60px;
+}
+p.more {
+	height: 20px;
+	line-height: 20px;	
+	font-size: 2em;
+	margin-top: 1.5em;
+}
+.more > a {
+	color: blue;
+	text-decoration: none;
+}

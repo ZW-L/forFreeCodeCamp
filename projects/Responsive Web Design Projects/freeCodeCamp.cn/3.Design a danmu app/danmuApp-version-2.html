@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Danmu App</title>
+    <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    div#danmu-window {
+        position: absolute;
+        width: 80%;
+        height: 60%;
+        border: 3px solid #FF6600FF;
+        border-radius: 5px;
+        left: 50%;
+        margin-left: -40%;
+        top: 10%;
+        overflow: hidden;
+    }
+	div#danmu-window > p {
+		position: absolute;
+		left: 100%;
+		height: 8%;
+		white-space: nowrap;
+		font-weight: bold;
+		font-size: 20px;
+	}
+    div#danmu-control {
+        position: absolute;
+        width: 35%;
+        height: 15%;
+        left: 50%;
+        margin-left: -17%;
+        top: 75%;
+        text-align: center;
+    }
+
+    #danmu-control>#input-danmu {
+        position: absolute;
+        display: block;
+        width: 80%;
+        height: 35%;
+        left: 10%;
+        margin-top: 2%;
+        font-size: 16px;
+    	text-indent: 1em;
+        border: 2px solid #FF00E5FF;
+		border-radius: 3px;
+		outline: none;
+    }
+    #danmu-control>#input-danmu:focus {
+    	box-shadow: 0 0 10px #FF00E5FF;
+    }
+    #danmu-control>.btn-group {
+    	position: absolute;
+    	top: 60%;
+    	width: 80%;
+    	height: 35%;
+    	left: 10%;
+    }
+    .btn-group > button {
+		width: 30%;
+		height: 100%;
+		background-color: #fff;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+    }
+    .btn-group > button:hover {
+    	background-color: #00AAFFFF;
+    }
+    .btn-group > .send-danmu {
+    	margin-right: 5%;
+    }
+    .btn-group > .clear-danmu {
+    	margin-left: 5%;
+    }
+
+	/* 用 CSS3动画 实现弹幕的运动*/
+    @-webkit-keyframes danmu-moving {
+		from { left: 100%; }
+		to { left: -100%; }
+    }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="danmu-window">
+        </div>
+        <div id="danmu-control">
+            <input type="text" placeholder="说点什么？" id="input-danmu" autofocus>
+            <div class="btn-group">
+                <button class="send-danmu">发送</button>
+                <button class="clear-danmu">清屏</button>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+    	const danmuWindow = document.getElementById('danmu-window');
+    	const inputDanmu = document.getElementById('input-danmu');
+    	const sendDanmu = document.getElementsByTagName('button')[0];
+    	const clearDanmu = document.getElementsByTagName('button')[1];
+
+    	// 生成弹幕颜色
+    	const getColor = () => {
+    		const redNumber = Math.floor(Math.random() * 256);
+    		const greenNumber = Math.floor(Math.random() * 256);
+    		const blueNumber = Math.floor(Math.random() * 256);
+    		return 'rgb(' + redNumber + ',' + greenNumber + ',' + blueNumber + ')';
+    	};
+    	// console.log(getColor());
+
+    	// 获取弹道位置，这里将弹幕窗口设置为10个弹道
+    	const getTop = () => {
+    		const top = Math.floor(Math.random() * 10) * 10;
+    		return top + '%';
+    	};
+    	// console.log(getTop());
+
+    	// 事件函数，who指定是机器人还是人为点击触发的事件
+    	const send = (who, text) => {
+    		if(text.length === 0) {
+    			alert('请输入内容！');
+    		}
+    		// 操作添加弹幕节点
+    		let danmu_text = document.createTextNode(text);
+    		let danmu_el = document.createElement('p');
+    		danmu_el.appendChild(danmu_text);
+    		danmuWindow.appendChild(danmu_el);
+    		// 设置样式和动画
+    		danmu_el.style.color = getColor();
+    		danmu_el.style.top = getTop();
+    		danmu_el.style.webkitAnimation = 'danmu-moving 20s linear .5s forwards';
+    		// 弹幕离开弹幕窗口时，删除弹幕节点
+    		setTimeout(function() {
+    			if(danmuWindow.hasChildNodes()) {
+    				danmuWindow.removeChild(danmu_el);
+    			}
+    		}, 20000);
+    		// 清空 input 的内容，并记录弹幕至机器人默认弹幕数组中
+    		if(who !== 'robot') {
+    			robotObj.push(text);
+	    		inputDanmu.value = '';
+    		}
+    	};
+
+    	const clear = () => {
+    		/*	简单的删除方法，但是尽量少用
+				danmuWindow.innerHTML = '';
+    		*/
+    		// 利用循环删除，注意使用for时要从后面开始遍历（从前面开始时会改变childNodes数组的长度破坏循环）
+    		while(danmuWindow.hasChildNodes()) {
+    			const child_list = danmuWindow.childNodes;
+    			danmuWindow.removeChild(child_list[0]);
+    		}
+    	};
+
+    	// 默认机器人弹幕
+    	let robotObj = [
+    		'666',
+    		'打得不错',
+    		'主播真菜',
+    		'开个盘',
+    		'无脑压负 发家致富'
+    	];
+    	let robotID = setInterval(function() {
+    		const danmuTabs = Math.floor(Math.random() * robotObj.length);
+    		send('robot', robotObj[danmuTabs]);
+    	}, 3000);
+
+    	// 事件绑定
+    	// 发送弹幕
+    	sendDanmu.addEventListener('click', (e)=> { 
+    		e.preventDefault();
+    		const text = document.getElementById('input-danmu').value;
+    		send(e, text); 
+    	}, false)
+    	
+    	// 清屏
+    	clearDanmu.addEventListener('click', (e)=> {
+    		// 清除机器人弹幕
+    		if(robotID) {
+    			clearInterval(robotID);
+    		}
+    		e.preventDefault();
+    		clear();
+    	}, false);
+
+    	// 绑定回车事件
+    	document.addEventListener('keydown', function(e){
+    		const nowFocus = document.getElementById('input-danmu');
+    		// 当 input-danmu 获取焦点且回车键按下时
+    		if(document.activeElement === nowFocus && e.keyCode === 13) {
+    			send(e, nowFocus.value);
+    		} 
+    	}, false);
+
+    </script>
+</body>
+
+</html>
