@@ -22,26 +22,31 @@
 + [范围内的数字求和](#sum-all)
 + [区分两个数组](#diff-array)
 + [瞄准和消灭](#destroyer)
-+ [罗密欧与朱丽叶](#where)
++ [罗密欧与朱丽叶](#what-is-in-a-name)
 + [短线连接格式](#spinal-case)
-+ [儿童黑话](#translate)
++ [儿童黑话](#translate-pig-latin)
 + [搜索和替换](#my-replace)
-+ [DNA 配对](#pair)
++ [DNA 配对](#pair-element)
 + [丢失的字母](#fear-not-letter)
-+ [集合排序](#unite)
-+ [转换 HTML 实体](#convert)
++ [集合排序](#unite-unique)
++ [转换 HTML 实体](#convert-html)
 + [求斐波那契数组中的奇数之和](#sum-fibs)
 + [对所有素数求和](#sum-primes)
-+ [最小公倍数](#gcd)
-+ [放弃](#drop)
++ [最小公倍数](#smallest-commons)
++ [放弃](#drop-elements)
 + [扁平化](#steamroller)
 + [二进制转化](#binary-agent)
-+ [真假值判断](#every)
-+ [可选参数](#add)
++ [真假值判断](#truth-check)
++ [可选参数](#add-together)
 + [构造一个 Person 类](#person)
 + [绘制碎片图](#orbital-period)
 
-**更多：**
+**项目及更多：**
++ [回文检查器](#palindrome)
++ [罗马数字转换器](#convert-to-roman)
++ [凯撒密码](#rot13)
++ [电话号码验证器](#telephone-check)
++ [收银机](#check-cash-register)
 + [更新仓库库存](#update-inventory)
 + [没有连续重复的字符串个数](#perm-alone)
 + [找到你的另一半](#pairwise)
@@ -497,12 +502,10 @@ chunkArrayInGroups(['a', 'b', 'c', 'd'], 2)
 
 ### <a id="sum-all">范围内的数字求和</a>
 
-**提示：** 
+**要求：** [范围内的数字求和](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/sum-all-numbers-in-a-range/)
 
-**要求：**
-+ 我们会传递给你一个包含两个数字的数组
-+ 返回这两个数字和它们之间所有数字的和
-+ 最小的数字并非总在最前面
+**提示：** 
++ 先判断从哪个数开始，再使用一个循环求和即可
 
 ```javascript
 function sumAll(arr) {
@@ -522,284 +525,298 @@ sumAll([1, 4]);
 <a href="#">返回目录</a>
 ***
 
+
 ### <a id="diff-array">区分两个数组</a>
 
+**要求：** [区分两个数组](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/diff-two-arrays/)
 **提示：**
-
-**要求：** 比较两个数组，然后返回一个新数组，该数组的元素为两个给定数组中所有独有的数组元素。换言之，返回两个数组的差异。
++ 实际上是求两个集合的差集，先找出集合 A 中有但集合 B 中无的元素，再找出集合 B 中有但集合 A 中无的元素，最后合并即可
++ 使用 filter() 过滤元素，使用 indexOf() 判断是否包含某元素
 
 ```javascript
+// 1.使用 filter() 和 indexOf()
 function diffArray(arr1, arr2) {
-	var newArr1 = arr1.filter(function(val) {
-		return arr2.indexOf(val) === -1;
-	});
-	var newArr2 = arr2.filter(function(val) {
-		return arr1.indexOf(val) === -1;
-	});
-	return newArr1.concat(newArr2);
+	var l1 = arr1.filter(function(val) {
+		return arr2.indexOf(val) === -1
+	})
+	var l2 = arr2.filter(function(val) {
+		return arr1.indexOf(val) === -1
+  })
+  
+	return l1.concat(l2)
 }
 
-diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5]);
+// 2.ES6
+function diffArray(arr1, arr2) {
+  const l1 = arr1.filter(v => arr2.indexOf(v) === -1)
+  const l2 = arr2.filter(v => arr1.indexOf(v) === -1)
+	return l1.concat(l2)
+}
+
+diffArray([1, 2, 3, 5], [1, 2, 3, 4, 5])
 ```
 <a href="#">返回目录</a>
 ***
+
 
 ### <a id="destroyer">瞄准和消灭</a>
 
-**提示：** 
-+ 提取`arguments`数组的值`Array.prototype.slice.call(arguments)`
-+ Array.filter();
+**要求：** [瞄准和消灭](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/seek-and-destroy/)
 
-**要求：** 实现一个摧毁(destroyer)函数，第一个参数是待摧毁的数组，其余的参数是待摧毁的值。
+**提示：** 
++ 可以使用 call() 并结合 arguments 参数提取第一个数组和其他的不定参数
++ 也可以使用 ES6 的剩余参数直接提取除第一个数组外的参数
+
 ```javascript
+// 1.使用 call(), filter(), indexOf() 等方法
 function destroyer(arr) {
-	var args = Array.prototype.slice.call(arguments);
-	var targetArr = args.shift();
-	return targetArr.filter(function(val) {
-		return args.indexOf(val) === -1 ? true : false;
-	});
+	var args = Array.prototype.slice.call(arguments)
+	var newArr = args.shift()
+	return newArr.filter(function(val) {
+		return args.indexOf(val) === -1
+	})
 }
 
-destroyer([1, 2, 3, 1, 2, 3], 2, 3);
+// 2.ES6
+function destroyer(arr, ...args) {
+	return arr.concat().filter(v => args.indexOf(v) === -1)
+}
+
+destroyer([1, 2, 3, 1, 2, 3], 2, 3)
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="where">罗密欧与朱丽叶</a>
+### <a id="what-is-in-a-name">罗密欧与朱丽叶</a>
+
+**要求：** [罗密欧与朱丽叶](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/wherefore-art-thou/)
 
 **提示：** 
-
-**要求：** 
-+ 写一个 function，它遍历一个对象数组（第一个参数）并返回一个包含相匹配的属性-值对（第二个参数）的所有对象的数组。
-+ 如果返回的数组中包含 source 对象的属性-值对，那么此对象的每一个属性-值对都必须存在于 collection 的对象中。
++ 外层 `filter()` 过滤第一个数组的元素，内层的 `filter()` 通过过滤第二个数组的键返回一个布尔值，作为外层 `filter()` 的返回值
++ 使用 `keys()` 获取对象的所有键名的数组，使用 `hasOwnProperty()` 判断对象是否包含指定属性
 
 ```javascript
-// 方法1
-function where(collection, source) {
-	var testKey = Object.keys(source);
-	return  collection.filter(function(obj) {	//遍历对象数组
-		var n = 0;
-		var flag;
-		while(n < testKey.length) {
-			if(obj.hasOwnProperty(testKey[n])) {
-				if(obj[testKey[n]] === source[testKey[n]]) {
-					flag = true;
-					n++ ;
-				} else {
-					flag = false;
-					return ;
-				}
-			} else {
-				flag = false;
-				return ;
-			}
-		}
-		return flag;
-	});
-}
-
-where([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
-
-// 方法2
-function where(collection, source) {
-	var testKey = Object.keys(source);
-	var temp;
+// 1.嵌套的 filter() 实现
+function whatIsInAName(collection, source) {
+	var testKey = Object.keys(source)
+	var temp
 	return collection.filter(function(obj) {
 		temp = testKey.filter(function(item) {
-			if(obj.hasOwnProperty(item)) {
-				return obj[item] === source[item];
-			}
-			return false;
-		});
-		return temp.length === testKey.length;
-	});
+			return obj.hasOwnProperty(item) && obj[item] === source[item]
+		})
+		return temp.length === testKey.length
+	})
 }
 
-where([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" });
+// 2.ES6
+function whatIsInAName(collection, source) {
+	const testKey = Object.keys(source)
+	return collection.filter(obj => testKey.filter(item => {
+    return obj.hasOwnProperty(item) && obj[item] === source[item]
+  }).length  === testKey.length)
+}
+
+whatIsInAName([{ first: "Romeo", last: "Montague" }, { first: "Mercutio", last: null }, { first: "Tybalt", last: "Capulet" }], { last: "Capulet" })
 ```
 <a href="#">返回目录</a>
 ***
+
 
 ### <a id="spinal-case">短线连接格式</a>
 
-**提示：** Spinal case 是 all-lowercase-words-joined-by-dashes 这种形式的，也就是以连字符连接所有小写单词
-
-**要求：** 将字符串转换为 spinal case 的形式并输出
-
-```javascript
-function spinalCase(str) {
-	var newStr = str.trim().replace(/[\s_]/g, '-');  //去除两端空白以及替换空白符、'-'
-	newStr = newStr.replace(/(?!^)(?=[A-Z])/g, '-');  //在非开头的的大写字母前面的位置添加'-'
-	newStr = newStr.replace(/-+/g, '-');  //将两个连续或以上的'-'替换成一个'-'
-	return newStr.toLowerCase();
-}
-
-spinalCase('This Is Spinal Tap');
-```
-<a href="#">返回目录</a>
-***
-
-### <a id="translate">儿童黑话</a>
+**要求：** [短线连接格式](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/spinal-tap-case/)
 
 **提示：** 
-
-**要求：** 
-+ 把一个英文单词的第一个辅音或辅音丛（consonant cluster）移到词尾，然后加上后缀 "ay"
-+ 如果单词以元音开始，你只需要在词尾添加 "way" 就可以了
++ 可以使用多个正则匹配和 replace() 替换解决不同的情境
++ 也可以使用单个正则配合 split() 切割为数组，再用 join() 组合为字符串
 
 ```javascript
-function translate(str) {
-	var vowels = ['a', 'e', 'i', 'o', 'u'];
-	if(vowels.indexOf(str[0]) !== -1)
-		return str.concat('way');
-	var arr = str.split('');
-	var index = 0;
-	while(index < arr.length) {
-		if(vowels.indexOf(arr[index]) !== -1)
-			break;
-		index ++;
-	}
-	return str.slice(index).concat(str.slice(0, index), 'ay');
+// 1.多步正则匹配并 replace()
+function spinalCase(str) {
+  return str.trim() // 去除两端空白
+    .replace(/[\s_]/g, '-') // 替换空白符和 '_' 为 '-'
+    .replace(/(?!^)(?=[A-Z])/g, '-') // 在非开头的的大写字母前面的位置添加 '-'
+    .replace(/-+/g, '-') // 将两个连续或以上的 '-' 替换成一个 '-'
+    .toLowerCase() // 转换为小写
 }
 
-translate("consonant");
+// 2.单个正则匹配指定位置，通过 split() 分割为数组，最后通过 join() 组合为字符串
+function spinalCase(str) {
+  return str.trim()
+    .split(/(?=[A-Z])|\s+|_|-/g)
+    .join('-')
+    .toLowerCase()
+}
+
+spinalCase('This Is Spinal Tap')
 ```
 <a href="#">返回目录</a>
 ***
+
+
+### <a id="translate-pig-latin">儿童黑话</a>
+
+**要求：** [儿童黑话](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/pig-latin/)
+
+**提示：** 
++ 对三种情况进行处理，用 `findIndex()` 找出字符串中第一个元音字母的下标
+
+```javascript
+// 对三种情况进行处理，findIndex() 能找出字符串中第一个元音字母的下标
+function translatePigLatin(str) {
+  var vowels = ['a', 'e', 'i', 'o', 'u']
+  if(vowels.indexOf(str[0]) !== -1) { // 第一个字母是元音
+    return str.concat('way')
+  }
+
+  var index = str.split('').findIndex(function(v) {
+    return vowels.indexOf(v) !== -1
+  })
+  // index 为 -1 时，直接在结尾添加 'ay'，否则将非元音拼接到结尾后再添加 'ay'
+  return index === -1 ? str.concat('ay') : str.slice(index).concat(str.slice(0, index), 'ay')
+}
+
+translatePigLatin("consonant")
+```
+<a href="#">返回目录</a>
+***
+
 
 ### <a id="my-replace">搜索和替换</a>
 
-**提示：** 
+**要求：** [搜索和替换](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/search-and-replace/)
 
-**要求：** 
-+ 使用给定的参数对句子执行一次查找和替换，然后返回新句子
-+ 第一个参数是将要对其执行查找和替换的句子
-+ 第二个参数是将被替换掉的单词（替换前的单词）
-+ 第三个参数用于替换第二个参数（替换后的单词）
+**提示：** 
++ 替换前判断所替换的字符串是否是大写开头，再用 `replace()` 进行替换即可 
 
 ```javascript
 function myReplace(str, before, after) {
-	var flag = before[0] === before[0].toUpperCase();
-	after = flag ? after.replace(after[0], after[0].toUpperCase()) : after;
-	return str.replace(before, after);
+  var flag = before[0] === before[0].toUpperCase()
+  after = flag ? after.replace(after[0], after[0].toUpperCase()) : after
+  return str.replace(before, after)
 }
 
-myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped");
+myReplace("A quick brown fox jumped over the lazy dog", "jumped", "leaped")
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="pair">DNA 配对</a>
+
+### <a id="pair-element">DNA 配对</a>
+
+**要求：** [DNA 配对](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/dna-pairing/)
 
 **提示：** 
-
-**要求：** 
-+ 在每一个数组中将给定的字母作为第一个碱基返回
-+ 字母和与之配对的字母在一个数组内，然后所有数组再被组织起来封装进一个数组
++ 使用 `forEach()` 或 `map()`，再在内部使用 `switch` 作分支判断即可
 
 ```javascript
-function pair(str) {
-	var arr = str.split('');
-	var newStr = [];
-	arr.forEach(function(val) {
+function pairElement(str) {
+	return str.split('').map(function(val) {
 		switch (val) {
 			case 'A':
-				newStr.push(['A', 'T']);
-				break;
+				return ['A', 'T']
 			case 'T':
-				newStr.push(['T', 'A']);
-				break;
+				return ['T', 'A']
 			case 'C':
-				newStr.push(['C', 'G']);
-				break;
+				return ['C', 'G']
 			case 'G':
-				newStr.push(['G', 'C']);
-				break;
+				return ['G', 'C']
 		}
-	});
-	return newStr;
+	})
 }
 
-pair("GCG");
+pairElement("GCG")
 ```
 <a href="#">返回目录</a>
 ***
+
 
 ### <a id="fear-not-letter">丢失的字母</a>
 
-**提示：** 
+**要求：** [丢失的字母](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/missing-letters/)
 
-**要求：** 
-+ 从传递进来的字母序列中找到缺失的字母并返回它
-+ 如果所有字母都在序列中，返回 undefined
+**提示：** 
++ 结合 charCodeAt()，fromCharCode()，通过一个循环即可
 
 ```javascript
 function fearNotLetter(str) {
 	if(str.length === 1)
-		return undefined;
-	var min = str.charCodeAt(0);
-	var max = str.charCodeAt(str.length - 1);
-	var newStr = [];
+		return undefined
+	var min = str.charCodeAt(0)
+	var max = str.charCodeAt(str.length - 1)
+  var ret = []
+  var temp
 	while(min <= max) {
-		newStr.push(String.fromCharCode(min));
-		min ++;
+    temp = String.fromCharCode(min)
+    if (str.indexOf(temp) === -1) {
+      ret.push(temp)
+    }
+		min ++
 	}
-	newStr = newStr.filter(function(val) {
-		return str.indexOf(val) === -1;
-	});
-	return newStr.length === 0 ? undefined : newStr.join('');
+	
+	return ret.length === 0 ? undefined : ret.join('')
 }
 
-fearNotLetter("abce")；
+fearNotLetter("abce")
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="unite">集合排序</a>
+
+### <a id="unite-unique">集合排序</a>
+
+**要求：** [集合排序](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/sorted-union/)
 
 **提示：** 
-
-**要求：** 
-+ 写一个 function，传入两个或两个以上的数组，返回一个以给定的原始数组排序的不包含重复值的新数组
-+ 非重复的数字应该以它们原始的顺序排序，但最终的数组不应该以数字顺序排序
++ 使用 `arguments` 参数和 `reduce()`
++ 也可以使用 `ES6` 的 `Set`
 
 ```javascript
-function unite(arr1, arr2, arr3) {
-	var newArr = Array.prototype.slice.call(arguments);
-	return newArr.reduce(function(prev, curr) {
-		var arr = curr.filter(function(val) {
-			return prev.indexOf(val) === -1;	//arr存储curr独立于prev的元素
-		});
-		return prev.concat(arr);
-	}, []);		//防止第一个数字中有重复的元素
+// 1.使用 arguments 参数和 reduce()
+function uniteUnique(arr1, arr2, arr3) {
+  var temp
+	var newArr = Array.prototype.slice.call(arguments)
+	return newArr.reduce(function(accu, curr) {
+		temp = curr.filter(function(val) {
+			return accu.indexOf(val) === -1	// temp 存储 curr 独立于 accu 的元素
+		})
+		return accu.concat(temp)
+	}, [])
 }
 
-unite([1, 3, 2], [5, 2, 1, 4], [2, 1]);
+// 2.ES6
+function uniteUnique(...args) {
+  return args.reduce((accu, curr) => [...new Set(accu.concat(curr))], [])
+}
+
+uniteUnique([1, 3, 2], [5, 2, 1, 4], [2, 1])
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="convert">转换 HTML 实体</a>
+### <a id="convert-html">转换 HTML 实体</a>
 
-**提示：** 
+**要求：** [转换 HTML 实体](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/convert-html-entities/)
 
-**要求：** 将字符串中的字符 &、<、>、"（双引号）,以及'（单引号）转换为它们对应的 HTML 实体
+**提示：**
++ 直接使用 `replace()` 配置正则替换即可
 
 ```javascript
-function convert(str) {
+function convertHTML(str) {
 	var escapeChars = {
 		'&': 'amp',
 		'>': 'gt',
 		'<': 'lt',
 		'"': 'quot',
 		'\'': 'apos'
-	};
+  }
+  
 	return str.replace(/[<>"'&]/g, function(match) {
-		return '&' + escapeChars[match] + ';';
-	});
+		return '&' + escapeChars[match] + ';'
+	})
 }
 
-convert("Dolce & Gabbana");
+convertHTML("Dolce & Gabbana")
 ```
 <a href="#">返回目录</a>
 ***
@@ -857,148 +874,150 @@ sumFibs(4)
 
 ### <a id="sum-primes">对所有素数求和</a>
 
-**提示：** 只有1和它本身两个约数的数叫质数, 1 不是质数，因为它只能被自身整除
+**要求：** [对所有素数求和](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/sum-all-primes/)
 
-**要求：** 求小于等于给定数值的质数之和
+**提示：**
++ 先创建一个函数用于判断素数，它内部的循环优化为判断次数仅为 `Math.sqrt(n)`
++ 再在主函数中使用一个循环累加即可
 
 ```javascript
-// 简单嵌套循环
+// 判断一个数是否是素数
+function isPrime(n) {
+	if (n < 2 || parseInt(n) !== n) return false
+	if (n === 2 || n === 3) return true
+	for(var i = 2; i <= Math.sqrt(n); i++) {
+		if (n % i === 0) return false
+		if (i + 1 > Math.sqrt(n)) return true
+	}
+}
+
 function sumPrimes(num) {
-	var sum = 0;
-	var temp = 2;
-	while(temp <= num) {
-		for(var i = 2; i <= temp; i++) {
-			if(i === temp)
-				sum += temp;
-			if(temp % i === 0)
-				break;
+	var sum = 0
+	var start = 2
+	while(start <= num) {
+		if (isPrime(start)) {
+			sum += start
 		}
-		temp++ ;
-	}
-	return sum;
+		start++
+  }
+  
+	return sum
 }
 
-sumPrimes(10);
+sumPrimes(10)
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="gcd">最小公倍数</a>
 
-**提示：** a和b的`最小公倍数` = (a*b) / a和b的`最大公约数`，求得最大公约数即得解
+### <a id="smallest-commons">最小公倍数</a>
 
-**要求：** 找出能被两个给定参数和它们之间的连续数字整除的最小公倍数,两个参数不一定按数字顺序排序
+**要求：** [最小公倍数](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/smallest-common-multiple/)
+
+**提示：**
++ `a,b 的最小公倍数 = (a*b)/a,b 的最大公约数`，只需要求得最大公约数即可
++ 使用辗转相除法递归求取最大公约数
 
 ```javascript
-function gcd(a, b) {		//新建函数： 递归求两个数的最大公约数
-	var max = Math.max(a, b);
-	var min = Math.min(a, b);
-	if(max%min === 0) {
-		return min;
-	}
-	return gcd(min, max%min);	//尾递归优化
-}
-function smallestCommons(arr) {
-	var newArr = [];
-	var i = Math.min(arr[0], arr[1]);
-	var j = Math.max(arr[0], arr[1]);
-	while(i <= j) {				//列出区间的所有数字
-		newArr.push(i);
-		i++;
-	}
-	return newArr.reduce(function(accu, curr) {		//利用reduce
-		return accu*curr/gcd(accu, curr);
-	});	
+// 递归求最大公约数
+function gcd(a, b) {
+	var max = Math.max(a, b)
+	var min = Math.min(a, b)
+	if (max % min === 0) return min
+  
+	return gcd(min, max % min) // 尾递归优化
 }
 
-smallestCommons([1,5]);
+function smallestCommons(arr) {
+	var newArr = []
+	var i = Math.min(arr[0], arr[1])
+	var j = Math.max(arr[0], arr[1])
+	while(i <= j) {
+		newArr.push(i)
+		i++
+  }
+
+	return newArr.reduce(function(accu, curr) {
+		return accu * curr / gcd(accu, curr)
+	})
+}
+
+smallestCommons([1,5])
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="drop">放弃</a>
+
+### <a id="drop-elements">放弃</a>
+
+**要求：** [放弃](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/drop-it/)
 
 **提示：** 
-
-**要求：** 
-+ 第一个参数是一个数组，第二个参数是一个函数，用来测试数组的第一个元素
-+ 如果参数函数返回fasle，就从数组中抛出该元素(注：此时数组已被改变)，继续测试数组的第一个元素，如果返回fasle，继续抛出，直到返回true
-+ 最后返回数组的剩余部分，如果没有剩余，就返回一个空数组
++ 使用一个循环找出返回 `true` 的下标即可
++ 也可以使用 `findIndex()` 方法
 
 ```javascript
-function drop(arr, func) {
-	if(arr.length === 0)
-		return [];
+// 1.使用一个循环
+function dropElements(arr, func) {
 	for(var i = 0; i < arr.length; i++) {
-		if(i === arr.length - 1)
-			return [];
-		if(func(arr[i]))
-			return arr.slice(i);
+		if(i === arr.length - 1) return []
+		if(func(arr[i])) return arr.slice(i)
 	}
 }
 
-drop([1, 2, 3], function(n) {return n < 3; })
+// 2.使用 findIndex()
+function dropElements(arr, func) {
+  var index = arr.findIndex(func)
+  return index === -1 ? [] : arr.slice(index)
+}
+
+dropElements([1, 2, 3], function(n) { return n < 3 })
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="steamroller">扁平化</a>
 
-**提示：** 利用递归求解
+### <a id="steamrollArray">扁平化</a>
 
-+ 当数组元素是单个元素时，直接push()
-+ 当数组元素是一维数组时，直接concat()
-+ 当数组元素是多维数组时，递归降维
-
-**要求：** 对嵌套的数组进行扁平化处理，你必须考虑到不同层级的嵌套
+**要求：** [扁平化](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/steamroller/)
+**提示：**
++ 可以使用递归，结合 `reduce()`, `isArray()`, `concat()`
++ 也可以使用循环，循环退出条件为 `isArray()` 返回 `false`
++ 也可以使用 `ES6` 的扩展运算符(`...`)精简语法
 
 ```javascript
-function steamroller(arr) {
-	var flag = true;
-	var num = 0;
-	while(num < arr.length) {     //判断数组中是否是一维数组
-		if(Array.isArray(arr[num])){
-			flag = false;
-			break;
-		}
-		num ++;
-	}
-	if(flag)           // 递归退出条件：当数组是一维数组时
-		return arr;
-
-	var newArr = [];
-	arr.forEach(function(val) {
-		if(!Array.isArray(val)) {
-			newArr.push(val);
-		} else {
-			newArr = newArr.concat(steamroller(val));  // 递归调用自身
-		}
-	});
-	return newArr;     // 输出数组
+// 1.使用递归，结合 reduce(), isArray(), concat()
+function steamrollArray(arr) {
+  return arr.reduce(function(accu, curr) {
+    return Array.isArray(curr) ? accu.concat(steamrollArray(curr)) : accu.concat(curr)
+  }, [])
 }
 
-steamroller([1, [2], [3, [[4]]]]);
+// 2.使用一个循环
+function steamrollArray(arr) {
+  var ret = arr.concat()
+  var index = ret.findIndex(v => Array.isArray(v))
+  while (index !== -1) {
+    ret = ret.slice(0, index).concat(ret[index]).concat(ret.slice(index + 1))
+    index = ret.findIndex(v => Array.isArray(v))
+  }
 
-// 也可用every()方法代替while循环
-function steamroller(arr) {
-	var flag = arr.every(function(val) {    // 判断数组是否为一维数组
-		return !Array.isArray(val);
-	});
-	if(flag)                // 递归推出条件
-		return arr;
-
-	var newArr = [];
-	arr.forEach(function(val) {
-		if(!Array.isArray(val)) {
-			newArr.push(val);
-		} else {
-			newArr = newArr.concat(steamroller(val));
-		}
-	});
-	return newArr;
+  return ret
 }
 
-steamroller([1, [2], [3, [[4]]]]);
+// 3.ES6 的扩展运算符
+function steamrollArray(arr) {
+  let ret = arr.concat()
+  let index = ret.findIndex(v => Array.isArray(v))
+  while (index !== -1) {
+    ret.splice(index, 1, ...ret[index])
+    index = ret.findIndex(v => Array.isArray(v))
+  }
+
+  return ret
+}
+
+steamrollArray([1, [2], [3, [[4]]]])
 ```
 <a href="#">返回目录</a>
 ***
@@ -1006,156 +1025,158 @@ steamroller([1, [2], [3, [[4]]]]);
 
 ### <a id="binary-agent">二进制转化</a>
 
-**提示：** 二进制字符串是以空格分隔的
+**要求：** [二进制转化](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/binary-agents)
 
-**要求：** 传入二进制字符串，翻译成英语句子并返回
+**提示：**
++ 先提取二进制数值使用 `parseInt()` 转换为十进制字符编码
++ 再使用 `fromCharCode()` 转换为字符
 
 ```javascript
 function binaryAgent(str) {
-	var newStr = str.replace(/\s/g, '');
+	var newStr = str.replace(/\s/g, '')
 	return newStr.replace(/\d{8}/g, function(match) {
-		return String.fromCharCode(parseInt(match, 2));
-	});
+		return String.fromCharCode(parseInt(match, 2))
+	})
 }
 
-binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111");
+binaryAgent("01000001 01110010 01100101 01101110 00100111 01110100 00100000 01100010 01101111 01101110 01100110 01101001 01110010 01100101 01110011 00100000 01100110 01110101 01101110 00100001 00111111")
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="every">真假值判断</a>
 
-**提示：** 
+### <a id="truth-check">真假值判断</a>
 
-**要求：** 如果集合(collection)中的所有对象都存在对应的属性(pre)，并且属性(pre)对应的值为真,函数返回ture；反之，返回false
+**要求：** [真假值判断](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/everything-be-true)
+
+**提示：**
++ 用 `for` 循环遍历并判断即可
++ 也可以使用 `every()`
 
 ```javascript
-// 用for循环实现
-function every(collection, pre) {
+// 1.用 for 循环实现
+function truthCheck(collection, pre) {
 	for(var i = 0; i < collection.length; i++) {
-		if(!collection[i].hasOwnProperty(pre))
-			return false;
-		if(!collection[i][pre])
-			return false;
-	}
-	return true;
+		if(!collection[i].hasOwnProperty(pre)) return false
+		if(!collection[i][pre]) return false
+  }
+  
+	return true
 }
 
-every([{"user": "Tinky-Winky", "sex": "male"}, 
-	{"user": "Dipsy", "sex": "male"}, 
-	{"user": "Laa-Laa", "sex": "female"}, 
-	{"user": "Po", "sex": "female"}], "sex");
-
-// 用every()实现
-function every(collection, pre) {
+// 2.实际上就是 every() 方法 
+function truthCheck(collection, pre) {
 	return collection.every(function(val) {
-		if(!val.hasOwnProperty(pre))
-			return false;
-		return Boolean(val[pre]);
-	});
+    if(!val.hasOwnProperty(pre)) return false
+    return Boolean(val[pre])
+	})
 }
 
-every([{"user": "Tinky-Winky", "sex": "male"}, 
+truthCheck([{"user": "Tinky-Winky", "sex": "male"}, 
 	{"user": "Dipsy", "sex": "male"}, 
 	{"user": "Laa-Laa", "sex": "female"}, 
-	{"user": "Po", "sex": "female"}], "sex");
+	{"user": "Po", "sex": "female"}], "sex")
 ```
 <a href="#">返回目录</a>
 ***
 
-### <a id="add">可选参数</a>
+
+### <a id="add-together">可选参数</a>
+
+**要求：** [可选参数](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/arguments-optional/)
 
 **提示：** 
-
-**要求：** 
-+ 创建一个计算两个参数之和的 function
-+ 如果只有一个参数，则返回一个接收一个参数function，再调用这个function，返回求和的结果
-+ 如果两个参数都不是有效的数字，则返回 undefined
++ 当任一参数不符合时返回 undefined
++ 当两个参数均符合时返回结果
++ 当先传入一个合法参数时返回一个函数，该函数是一个闭包，它还会返回一个结果(实际上就是柯里化))
 
 ```javascript
-function add() {
-	var arr = Array.prototype.slice.call(arguments);
-	if(arr.length === 1)
-		return typeof arr[0] !== 'number' ? undefined : function(num) {
-			return typeof num === 'number' ? arr[0] + num : undefined;
-		};
-	if(typeof arr[0] !== 'number' || typeof arr[1] !== 'number')
-		return undefined;
-	return arr[0] + arr[1];
+function addTogether() {
+	var args = Array.prototype.slice.call(arguments)
+  if(args.length === 2 && (typeof args[0] !== 'number' || typeof args[1] !== 'number')) {
+    return undefined
+  }
+
+	if(args.length === 1) {
+		return (typeof args[0] !== 'number') ? undefined : function(num) {
+			return (typeof num === 'number') ? args[0] + num : undefined
+    }
+  }
+
+  return args[0] + args[1]
 }
 
-console.log(add(2)([3]));
+addTogether(2, 3)
 ```
 <a href="#">返回目录</a>
 ***
+
 
 ### <a id="person">构造一个 Person 类</a>
 
+**要求：** [构造一个 Person 类](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/make-a-person/)
+
 **提示：** 
++ 直接按照面向对象的方式构建即可
 
-**要求：** 用下面给定的方法构造一个对象,方法有
-
-+ getFirstName(), getLastName(), getFullName()
-+ setFirstName(first), setLastName(last), setFullName(firstAndLast)
-+ 所有有参数的方法只接受一个字符串参数，所有的方法只与实体对象交互
 ```javascript
-// 题目要求对象只能有6个属性，所有就这样写了
 var Person = function(firstAndLast) {
-    var fullName = firstAndLast;
-    var arr = fullName.split(" ");
-    var firstName = arr[0];
-    var lastName = arr[1];
+  var _firstName
+  var _lastName
+  function init(fullName) {
+    var arr = fullName.split(' ')
+    _firstName = arr[0]
+    _lastName = arr[1]
+  }
+  init(firstAndLast)
 
-    this.getFirstName = function() {
-        return firstName;
-    };
-    this.getLastName = function() {
-        return lastName;
-    };
-    this.getFullName = function() {
-        return fullName;
-    };
-    this.setFirstName = function(first) {
-        firstName = first;
-        fullName = firstName + ' ' + lastName;
-    };
-    this.setLastName = function(last) {
-        lastName = last;
-        fullName = firstName + ' ' + lastName;
-    };
-    this.setFullName = function(firstAndLast) {
-        fullName = firstAndLast;
-        arr = fullName.split(" ");
-        firstName = arr[0];
-        lastName = arr[1];
-    };
-};
+  this.getFirstName = function() {
+    return _firstName
+  }
+  this.getLastName = function() {
+    return _lastName
+  }
+  this.getFullName = function() {
+    return _firstName + ' ' + _lastName
+  }
+  this.setFirstName = function(firstName) {
+    _firstName = firstName
+  }
+  this.setLastName = function(lastName) {
+    _lastName = lastName
+  }
+  this.setFullName = function(fullName) {
+    init(fullName)
+  }
+}
 
-var bob = new Person('Bob Ross');
-bob.getFullName();
+var bob = new Person('Bob Ross')
+bob.getFullName()
 ```
 <a href="#">返回目录</a>
 ***
+
 
 ### <a id="orbital-period">绘制碎片图</a>
 
-**提示：** 地球半径是 6367.4447 kilometers, 地球的GM值是 398600.4418, 圆周率为Math.PI
+**要求：** [绘制碎片图](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting/map-the-debris/)
 
-**要求：** 
-+ 返回一个数组，其内容是把原数组中对应元素的平均海拔转换成其对应的轨道周期
-+ 求得的值应该是一个与其最接近的整数，轨道是以地球为基准的
+**提示：** 
++ 地球半径是 `6367.4447km`, 地球的 `GM` 值是 `398600.4418`, 圆周率为 `Math.PI`
++ 直接计算后，为对象添加 `orbitalPeriod` 并删除 `avgAlt` 属性即可
+
 ```javascript
 function orbitalPeriod(arr) {
-    var GM = 398600.4418;
-    var earthRadius = 6367.4447;
-    for (var i = 0; i < arr.length; i++) {
-        arr[i].orbitalPeriod = Math.round(2 * Math.PI * (earthRadius + arr[i].avgAlt) * Math.sqrt((earthRadius + arr[i].avgAlt) / GM));
-        delete arr[i].avgAlt;
-    }
-    return arr;
+  var GM = 398600.4418
+  var earthRadius = 6367.4447
+  return arr.map(function(v) {
+    v.orbitalPeriod = Math.round(2*Math.PI*(earthRadius+v.avgAlt)*Math.sqrt((earthRadius+v.avgAlt)/GM))
+    delete v.avgAlt
+    return v
+  })
 }
 
-orbitalPeriod([{ name: "sputnik", avgAlt: 35873.5553 }]);
+orbitalPeriod([{ name: "sputnik", avgAlt: 35873.5553 }])
 ```
 <a href="#">返回目录</a>
 ***
@@ -1163,116 +1184,259 @@ orbitalPeriod([{ name: "sputnik", avgAlt: 35873.5553 }]);
 
 
 
-## 更多
+## 项目及更多
+
+### <a id="palindrome">回文检查器</a>
+
+要求：[回文检查器](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/palindrome-checker/)
+
+提示：
++ 先用正则剔除不合法字符，再判断字符串相等即可
+
+```js
+function palindrome(str) {
+  var str1 = str.replace(/[^0-9a-zA-Z]/g, '').toLowerCase()
+  var str2 = str1.split('').reverse().join('')
+  
+  return str1 === str2 
+}
+
+palindrome("eye")
+```
+<a href="#">返回目录</a>
+***
+
+### <a id="convert-to-roman">罗马数字转换器</a>
+
+要求：[罗马数字转换器](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/roman-numeral-converter/)
+
+提示：
++ 先使用一个循环生成一段未处理的罗马数字字符串
++ 再将不合法的串(`VIIII`, `LXXXX`, `DCCCC`, `IIII`, `XXXX`, `CCCC`)替换为合法的串(`IX`, `XC`, `CM`, `IV`, `XM`, `CD`)
+
+```js
+function convertToRoman(num) {
+  var str = ''
+  while(num > 0) {
+    if(num - 1000 >= 0) {
+      str += 'M'
+      num -= 1000
+    } else if (num - 500 >= 0) {
+      str += 'D'
+      num -= 500
+    } else if (num - 100 >= 0) {
+      str += 'C'
+      num -= 100
+    } else if (num - 50 >= 0) {
+      str += 'L'
+      num -= 50
+    } else if(num - 10 >= 0) {
+      str += 'X'
+      num -= 10
+    } else if(num - 5 >= 0) {
+      str += 'V'
+      num -= 5
+    } else if(num - 1 >= 0) {
+      str += 'I'
+      num -= 1
+    }
+  }
+
+  return str.replace(/VI{4}|LX{4}|DC{4}|I{4}|X{4}|C{4}/g, function(match) {
+    switch(match) {
+      case 'VIIII':
+        return "IX"
+      case 'LXXXX':
+        return "XC"
+      case 'DCCCC':
+        return "CM"
+      case 'IIII':
+        return "IV"
+      case 'XXXX':
+        return "XL"
+      case 'CCCC':
+        return "CD"  
+    }
+  })
+}
+
+convertToRoman(44)
+```
+<a href="#">返回目录</a>
+***
+
+### <a id="rot13">凯撒密码</a>
+
+要求：[凯撒密码](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/caesars-cipher/)
+
+提示：
++ 使用 charCodeAt() 和 fromCharCode() 方法
++ 直接将各字母码值与 `M` 比较，确定返回 `+13` 或 `-13` 的字符
+
+```js
+function rot13(str) { 
+	var temp = 'M'.charCodeAt(0)
+
+	return str.replace(/[A-Z]/g, function(match) {
+		return match.charCodeAt(0) <= temp ? String.fromCharCode(match.charCodeAt(0) + 13) : String.fromCharCode(match.charCodeAt(0) - 13)
+	})
+}
+
+rot13("SERR PBQR PNZC")
+```
+<a href="#">返回目录</a>
+***
+
+### <a id="telephone-check">电话号码验证器</a>
+
+要求：[电话号码验证器](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/telephone-number-validator/)
+
+提示：
++ 方法1先替换合法的字符后测试结果，第二步的正则测试只剩下两种合法结果，较为容易
++ 方法2直接使用一个正则判断，难度较高；除了 `1` 开头可有可无后，合法的结果有无非就是几种情况下的组合(使用正则分组和分支很容易解决)，需要注意的是：
+	+ 合法的空格或 `-` 是可有可无的
+	+ 区号只能包含一对合法的括号或没有
+
+```js
+// 1.先替换合法的字符后测试结果
+function telephoneCheck(str) {
+  var newStr = str.replace(/\s+|-(?!1)/g, '') // 当 '-' 在开头时不会替换，因为这是不合法的
+  var regex = /^1?(\d{10}|\(\d{3}\)\d{7})$/ // 开头的 1 是可选的，后面可以是连续的 10 个数字或 (123)4567890 的形式
+  return regex.test(newStr)
+}
+
+// 2.直接使用一个正则判断，难度较高
+function telephoneCheck(str) {
+  var regex = /^1?[-\s]?(\(\d{3}\)|\d{3})[-\s]?(\d{3}[-\s]\d{4}|\d{7})$/
+  return regex.test(str.trim()) // 先取消首尾空格再测试
+}
+
+telephoneCheck("555-555-5555")
+```
+<a href="#">返回目录</a>
+***
+
+### <a id="check-cash-register">收银机</a>
+
+要求：[收银机](https://learn.freecodecamp.one/javascript-algorithms-and-data-structures/javascript-algorithms-and-data-structures-projects/cash-register/)
+
+提示：
++ 
+
+```js
+
+```
+<a href="#">返回目录</a>
+***
 
 ### <a id="update-inventory">更新仓库库存</a>
 
-**要求：**
+**要求：** [更新仓库库存](https://freecodecamp.cn/challenges/inventory-update)
 
 **提示：**
++ 先对边界进行处理，可以使用 sort() 可以对结果排序
++ 提取其中一个数组的键名，再遍历另一个数组，依次添加项或更新项即可
+
 ```js
-// 很长的代码
-function sortArr(arr) {   //排序函数
-    return arr.sort(function(a, b) {
-        return a[1] > b[1];
-    });
-}
 function updateInventory(arr1, arr2) {
-    if(arr1.length === 0 && arr2.length === 0)  //特殊情况
-        return [];
-    if(arr1.length === 0)
-        return sortArr(arr2);
-    if(arr2.length === 0)
-        return sortArr(arr1);
-    var resKeys = [];           // 获取arr1的'键'
-    arr1.forEach(function(val) {
-        resKeys.push(val[1]);
-    });
-    arr2.forEach(function(val) {   // 遍历arr2，将其push进arr1或者更新数目
-        if(resKeys.indexOf(val[1]) === -1)
-            arr1.push(val);
-        else 
-            arr1[resKeys.indexOf(val[1])][0] += val[0];
-    });
-    return sortArr(arr1);
+  if(arr1.length === 0 && arr2.length === 0) return []
+  if(arr1.length === 0) return arr2.sort(function(a, b) { return a[1] > b[1] })
+  if(arr2.length === 0) return arr1.sort(function(a, b) { return a[1] > b[1] })
+	
+	var ret = arr1.concat()
+  var keys = ret.map(function(val) { return val[1] })
+  arr2.forEach(function(val) {
+    if(keys.indexOf(val[1]) === -1) {
+      ret.push(val)
+    } else {
+      ret[keys.indexOf(val[1])][0] += val[0]
+    }
+  })
+
+  return ret.sort(function(a, b) { return a[1] > b[1] })
 }
+
 // 仓库库存示例
 var curInv = [
-    [21, "Bowling Ball"],
-    [2, "Dirty Sock"],
-    [1, "Hair Pin"],
-    [5, "Microphone"]
-];
+  [21, "Bowling Ball"],
+  [2, "Dirty Sock"],
+  [1, "Hair Pin"],
+  [5, "Microphone"]
+]
 var newInv = [
-    [2, "Hair Pin"],
-    [3, "Half-Eaten Apple"],
-    [67, "Bowling Ball"],
-    [7, "Toothpaste"]
-];
+  [2, "Hair Pin"],
+  [3, "Half-Eaten Apple"],
+  [67, "Bowling Ball"],
+  [7, "Toothpaste"]
+]
 
-updateInventory(curInv, newInv);
+updateInventory(curInv, newInv)
 ```
 <a href="#">返回目录</a>
 ***
 
 ### <a id="perm-alone">没有连续重复的字符串个数</a>
 
-**要求：**
+**要求：** [没有连续重复的字符串个数](https://freecodecamp.cn/challenges/no-repeats-please)
 
 **提示：**
++ 使用递归求取全排列，再筛选全排列结果中合法的序列长度，但是时间和空间复杂度都很高！
+
 ```js
-// 用递归获取n个字符全排列的情况，再筛选（递归部分用了很多时间，而主函数的筛选部分由于处理基数大也用了很大一部分的时间）
-function permAlone(str) {
-	var allList = getList(str);		// 生成所有序列
-	return allList.filter(function(val) {	//筛选删除有连续相同字母的序列
-		return !/(\w)\1/.test(val);     //一开始我用replace再判断长度，导致效率更低了	
-	}).length;
-}
-function getList(str, thisChar) {   // 递归函数
-	if(str.length === 2){	// 退出递归
-		return [ str[0]+str[1], str[1]+str[0] ];
-	}
-	var char = str[str.length-1];
-	var prev = getList(str.slice(0, -1), char);	// 递归获取prev数组
-	var now = [];	// 将char插入到prev每个元素的每个位置，存至now数组
-	for(var i=0; i<prev.length; i++){
-		for(var j=0; j<prev[i].length+1; j++) {
-			var item = prev[i].slice(0, j) + char + prev[i].slice(j);
-			now.push(item);
-		}
-	}
-	return now;	// 返回now数组作为下一轮循环的prev数组
+// 1.使用递归求取全排列，再筛选全排列结果中合法的序列长度；时间和空间复杂度都很高！
+function getList(str) {
+  // 递归结束条件
+  if(str.length === 2) {
+    return [str[0] + str[1], str[1] + str[0]]
+  }
+  // 递归拆分
+  var char = str[str.length - 1]
+  var prev = getList(str.slice(0, -1)) // prev 为上一轮递归返回的结果数组
+  // 递归计算，将 char 插入到 prev 数组中每个字符串的空隙
+  var ret = []
+  for(var i = 0; i < prev.length; i++){
+    for(var j = 0; j < prev[i].length + 1; j++) {
+      ret.push(prev[i].substring(0, j) + char + prev[i].substring(j))
+    }
+  }
+
+  return ret
 }
 
-permAlone('aab');
+function permAlone(str) {
+	return getList(str).filter(function(val) {
+		return !/(\w)\1/.test(val)
+	}).length
+}
+
+permAlone('aab')
 ```
 <a href="#">返回目录</a>
 ***
 
 ### <a id="pairwise">找到你的另一半</a>
 
-**要求：**
+**要求：** [找到你的另一半](https://freecodecamp.cn/challenges/pairwise)
 
 **提示：**
++ 使用 `reduce()` 累加，内部判断后，将原值赋值为 NaN，禁止再次进行计算
+
 ```js
-// 一开始我是用一个forEach，每次循环修改了arr来使下一次的循环合法
 function pairwise(arr, arg) {
-    if(arr.length === 0 || arr.length === 1) {
-        return 0;
+  if(arr.length === 0 || arr.length === 1) return 0
+  var newArr = arr.concat()
+  return newArr.reduce(function(accu, curr, index) {
+    var next = newArr.findIndex(function(v) { return v === arg - curr })
+    if (next !== -1 && next !== index) {
+      newArr[index] = NaN
+      newArr[next] = NaN
+      return accu +index + next
     }
-    var sum = 0;
-    arr.forEach(function(value, index) {
-        var temp = arr.slice(index + 1).indexOf(arg - value);
-        if(temp !== -1) {
-            arr[index] = NaN;
-            sum += index + arr.indexOf(arg - value);
-            arr[arr.indexOf(arg - value)] = NaN;
-        }
-    });
-    return sum;
+    return accu
+  }, 0)
 }
 
-pairwise([1,4,2,3,0,5], 7);
+pairwise([1,4,2,3,0,5], 7)
 ```
 <a href="#">返回目录</a>
 ***
