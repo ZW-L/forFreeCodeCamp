@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+}
+
+#app {}
+
+#container {
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  /* background-color: #ccc; */
+}
+
+#toolbar, #wrapper, #preview {
+  box-sizing: border-box;
+  position: relative;
+  height: 100vh;
+}
+
+#toolbar {
+  width: 50px;
+  background-color: rgb(40, 44, 52);
+}
+
+#wrapper {
+  flex: 1;
+}
+
+#preview {
+  flex: 1;
+  padding: 10px;
+  overflow-y: scroll;
+  border-left: 1px solid #ccc;
+}
+
+#editor {
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  min-height: 100vh;
+  padding: 10px;
+  resize: none;
+  outline: none;
+  font-size: 20px;
+  border: none;
+  background-color: rgb(246, 246, 246);
+}
+
+.tool-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tool-item {
+  width: 30px;
+  height: 30px;
+  margin: 15px 10px;
+  line-height: 30px;
+  text-align: center;
+  background-color: rgb(246, 246, 246);
+  border-radius: 3px;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Build a Markdown Previewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script type="text/babel">
+    const ToolBar = (props) => {
+      return (
+        <div id="toolbar">
+          <ul className="tool-list">
+            <li className="tool-item">A</li>
+            <li className="tool-item">B</li>
+            <li className="tool-item">C</li>
+            <li className="tool-item">D</li>
+            <li className="tool-item">E</li>
+          </ul>
+        </div>
+      )
+    }
+
+    const Editor = (props) => {
+      return (
+        <div id="wrapper">
+          <textarea id="editor" placeholder="请使用 markdown 语法开始你的表演..."
+            onChange={props.onChange}
+          ></textarea>
+        </div>
+      )
+    }
+
+    const Previewer = (props) => {
+      const renderer = new marked.Renderer()
+      return (
+        <div id="preview" dangerouslySetInnerHTML={{ __html: marked(props.text, { renderer: renderer }) }}></div>
+      )
+    }
+
+    class Container extends React.Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          text: '',
+        }
+        this.handleEditorChange = this.handleEditorChange.bind(this)
+      }
+
+      handleEditorChange(e) {
+        this.setState({ text: e.target.value })
+      }
+
+      render() {
+        return (
+          <div id="container">
+            <ToolBar />
+            <Editor onChange={this.handleEditorChange}/>
+            <Previewer text={this.state.text}/>
+          </div>
+        ) 
+      }
+    }
+
+    ReactDOM.render(<Container />, document.getElementById('app'))
+  </script>
+</body>
+</html>
