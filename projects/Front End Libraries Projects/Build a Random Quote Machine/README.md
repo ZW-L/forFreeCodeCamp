@@ -1,3 +1,7 @@
+## 在线阅览
+
+[codepen](https://codepen.io/lizhiwen93/pen/yLLqVae)
+
 ## 项目结构
 
 ```
@@ -44,7 +48,7 @@
 
 ### 数据
 
-+ `state`： `Container` 维护一份 `state`，向下流至 `Text` 和 `BtnBar` 组件：
++ `state`： `Container` 组件维护一份 `state`，向下流至 `Text` 和 `BtnBar` 组件：
 
 ```jsx
 constructor(props) {
@@ -64,7 +68,7 @@ constructor(props) {
 
 ```jsx
 componentDidMount() {
-  const url ='https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json#'
+  const url ='https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json'
   axios.get(url).then(res => {
     console.log('get quotes...')
     this.setState({
