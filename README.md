@@ -27,7 +27,7 @@
 
 ### 前端库和框架
 
-+ 构建一个随机引语生成器
++ [构建一个随机引语生成器](https://github.com/ZW-L/freecodecamp/tree/master/projects/Front%20End%20Libraries%20Projects/Build%20a%20Random%20Quote%20Machine)
 + 构建一个 Markdown 文件预览器
 + 构建一台鼓式机器
 + 构建一个 JavaScript 计算器
