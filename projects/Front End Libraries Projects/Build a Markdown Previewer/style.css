@@ -9,7 +9,6 @@
   display: flex;
   flex-wrap: nowrap;
   position: relative;
-  /* background-color: #ccc; */
 }
 
 #toolbar, #wrapper, #preview {
@@ -40,6 +39,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 10px;
+  padding-bottom: 200px;
   resize: none;
   outline: none;
   font-size: 20px;
@@ -60,4 +60,43 @@
   text-align: center;
   background-color: rgb(246, 246, 246);
   border-radius: 3px;
+}
+
+
+/* preview 样式 */
+#preview > h1,
+#preview > h2,
+#preview > h3,
+#preview > h4,
+#preview > h5,
+#preview > h6,
+#preview > p,
+#preview > pre,
+#preview > ul,
+#preview > div,
+#preview > table
+{
+  margin: 10px 0;
+}
+
+#preview > table {
+  border-collapse: collapse;
+}
+
+#preview tbody  tr:nth-child(even) {
+  background-color: rgb(235, 235, 235);
+}
+
+#preview thead tr {
+  background-color: rgb(235, 235, 235);
+}
+
+#preview th, #preview td {
+  padding: 5px 15px;
+}
+
+#preview > pre {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(235, 235, 235);
 }
